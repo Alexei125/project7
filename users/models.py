@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from materials.models import Lesson, Course
+
 
 class User(AbstractUser):
     username = None
@@ -35,3 +37,20 @@ class User(AbstractUser):
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
+
+
+class Payment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
+    date_of_pyment = models.DateField(auto_now_add=True, verbose_name='Дата оплаты')
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=True, null=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, blank=True, null=True)
+    payment_status = models.CharField(max_length=50, verbose_name="Статус оплаты")
+    amount = models.PositiveIntegerField(verbose_name="Сумма оплаты")
+    method = models.CharField(max_length=5, verbose_name="Способ оплаты")
+
+    class Meta:
+        verbose_name = "Оплата"
+        verbose_name_plural = "Оплаты"
+
+    def __str__(self):
+        return f"{self.user} - {self.date_of_pyment}"
