@@ -1,6 +1,6 @@
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import OrderingFilter
-from rest_framework.permissions import IsAuthenticated
+from django_filters import rest_framework
+from rest_framework import filters
+
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import (
@@ -11,7 +11,7 @@ from rest_framework.generics import (
     DestroyAPIView,
 )
 
-from materials import models
+from materials import models, serializers
 from materials.models import Course, Lesson
 from users.models import Payment
 from materials.serializers import CourseSerializer, LessonSerializer, PaymentsSerializer
@@ -53,12 +53,11 @@ class LessonDestroyAPIView(DestroyAPIView):
 
 
 class PaymentListAPIView(ListAPIView):
-    serializer_class = PaymentsSerializer
+    serializer_class = serializers.PaymentsSerializer
     queryset = Payment.objects.all()
-    filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = ["course", "lesson"]
-    ordering_fields = ["date_of_payment", "method"]
-
+    filter_backends = [rest_framework.DjangoFilterBackend, filters.OrderingFilter]
+    filterset_fields = ["course", "lesson", "method"]
+    ordering_fields = ["date_of_payment"]
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
