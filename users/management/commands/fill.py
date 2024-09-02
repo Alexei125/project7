@@ -34,4 +34,3 @@ class Command(BaseCommand):
             )
 
         Payment.objects.bulk_create(payment_for_create)
-        
