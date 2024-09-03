@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
 
-from materials.models import Lesson, Course
+from materials.models import Course, Lesson
 from users.models import Payment, User
 
 
@@ -14,7 +14,7 @@ class Command(BaseCommand):
                 "course": "Course1",
                 "payment_status": "Paid",
                 "amount": 1000,
-                "method": "Card"
+                "method": "Card",
             },
             {
                 "user": "User2",
@@ -23,14 +23,11 @@ class Command(BaseCommand):
                 "course": "Course2",
                 "payment_status": "Not Paid",
                 "amount": 500,
-                "method": "Cash"
+                "method": "Cash",
             },
-
         ]
         payment_for_create = []
         for payment_item in payment_list:
-            payment_for_create.append(
-                Payment(**payment_item)
-            )
+            payment_for_create.append(Payment(**payment_item))
 
         Payment.objects.bulk_create(payment_for_create)
