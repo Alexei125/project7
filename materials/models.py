@@ -1,6 +1,7 @@
 from django.db import models
 
 from config import settings
+from config.settings import AUTH_USER_MODEL
 
 
 class Course(models.Model):
@@ -72,3 +73,16 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = "Урок"
         verbose_name_plural = "Уроки"
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='пользователь')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='курс')
+    is_subscribe = models.BooleanField(default=False, verbose_name="подписка")
+
+    def __str__(self):
+        return f'{self.user} - {self.course}'
+
+    class Meta:
+        verbose_name = 'подписка'
+        verbose_name_plural = 'подписки'
