@@ -1,6 +1,12 @@
+asgiref==3.8.1
+black==24.8.0
+click==8.1.7
 Django==5.1
 django-filter==24.3
 djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+generics==7.0.0
+isort==5.13.2
 mypy-extensions==1.0.0
 nullable==0.2.0
 packaging==24.1
@@ -8,7 +14,8 @@ pathspec==0.12.1
 pillow==10.4.0
 platformdirs==4.2.2
 psycopg2-binary==2.9.9
+PyJWT==2.9.0
 python-dotenv==1.0.1
+shell==1.0.1
 sqlparse==0.5.1
-isort==5.13.2
-djangorestframework-simplejwt==5.3.1
+
