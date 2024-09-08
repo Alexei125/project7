@@ -9,25 +9,24 @@ from users.models import User
 
 class LessonTestCase(APITestCase):
     def setUp(self):
-        self.user = User.objects.create(email='admin1@localhost')
-        self.course = Course.objects.create(title='Програмного обеспечения')
-        self.lesson = Lesson.objects.create(title='Основы программирования', course=self.course, owner=self.user)
+        self.user = User.objects.create(email="admin1@localhost")
+        self.course = Course.objects.create(title="Програмного обеспечения")
+        self.lesson = Lesson.objects.create(
+            title="Основы программирования", course=self.course, owner=self.user
+        )
         self.client.force_authenticate(user=self.user)
 
     def test_lesson_retrieve(self):
-        self.url = reverse('lms:lessons_retrieve', args=(self.lesson.pk,))
-        self.data = {
-            'title': 'Основы программирования',
-            'course': self.course.id
-        }
+        self.url = reverse("lms:lessons_retrieve", args=(self.lesson.pk,))
+        self.data = {"title": "Основы программирования", "course": self.course.id}
         response = self.client.get(self.url)
-        self. data = response.json()
+        self.data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['title'], self.lesson.title)
-        self.assertEqual(response.data['course'], self.lesson.course.id)
+        self.assertEqual(response.data["title"], self.lesson.title)
+        self.assertEqual(response.data["course"], self.lesson.course.id)
 
     def test_lesson_create(self):
-        self.url = reverse('lms:lessons_create')
+        self.url = reverse("lms:lessons_create")
         self.data = {
             "title": "Основы backend-разработки",
             "course": self.lesson.course.id,
@@ -36,38 +35,36 @@ class LessonTestCase(APITestCase):
         response = self.client.post(self.url, self.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        self.assertEqual(response.data['title'], "Основы backend-разработки")
-        self.assertEqual(response.data['course'], self.lesson.course.id)
-        self.assertEqual(
-            Lesson.objects.all().count(), 2)
+        self.assertEqual(response.data["title"], "Основы backend-разработки")
+        self.assertEqual(response.data["course"], self.lesson.course.id)
+        self.assertEqual(Lesson.objects.all().count(), 2)
 
     def test_lesson_update(self):
-        self.url = reverse('lms:lessons_update', args=(self.lesson.pk,))
+        self.url = reverse("lms:lessons_update", args=(self.lesson.pk,))
         self.data = {
             "title": "Основы backend-разработки",
             "course": self.course.id,
             "description": "Внутренняя часть цифрового продукта",
         }
         response = self.client.put(self.url, self.data)
-        self. data = response.json()
+        self.data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['title'], "Основы backend-разработки")
-        self.assertEqual(response.data['course'], self.course.id)
+        self.assertEqual(response.data["title"], "Основы backend-разработки")
+        self.assertEqual(response.data["course"], self.course.id)
 
     def test_lesson_delete(self):
-        self.url = reverse('lms:lessons_delete', args=(self.lesson.pk,))
+        self.url = reverse("lms:lessons_delete", args=(self.lesson.pk,))
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(
-            Lesson.objects.all().count(), 0)
+        self.assertEqual(Lesson.objects.all().count(), 0)
 
 
 class SubscriptionTestCase(APITestCase):
     def setUp(self):
-        self.user = User.objects.create(email='admin1@localhost')
-        self.course = Course.objects.create(title='Програмное обеспечение')
+        self.user = User.objects.create(email="admin1@localhost")
+        self.course = Course.objects.create(title="Програмное обеспечение")
         self.client.force_authenticate(user=self.user)
-        self.url = reverse('lms:subscription_create')
+        self.url = reverse("lms:subscription_create")
 
     def test_subscription_activate(self):
         """Тест подписки на курс"""

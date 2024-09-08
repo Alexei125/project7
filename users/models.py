@@ -49,6 +49,18 @@ class Payment(models.Model):
     payment_status = models.CharField(max_length=50, verbose_name="Статус оплаты")
     amount = models.PositiveIntegerField(verbose_name="Сумма оплаты")
     method = models.CharField(max_length=5, verbose_name="Способ оплаты")
+    session_id = models.CharField(
+        max_length=200, verbose_name="Id сессии", blank=True, null=True
+    )
+    link = models.URLField(max_length=400, verbose_name="Ссылка", blank=True, null=True)
+    user - models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь",
+        blank=True,
+        null=True,
+        related_name="payments",
+    )
 
     class Meta:
         verbose_name = "Оплата"

@@ -11,7 +11,7 @@ from rest_framework import serializers
 
 
 class LessonSerializer(ModelSerializer):
-    validators = [YoutubeLinkValidator(field='video')]
+    validators = [YoutubeLinkValidator(field="video")]
 
     class Meta:
         model = Lesson
@@ -42,7 +42,7 @@ class CourseDetailSerializer(ModelSerializer):
 
 
 class CourseSerializer(ModelSerializer):
-    information_all_lessons = LessonSerializer(many=True, source='course')
+    information_all_lessons = LessonSerializer(many=True, source="course")
     number_of_lessons = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -59,4 +59,4 @@ class PaymentsSerializer(ModelSerializer):
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
-        fields = '__all__'
+        fields = "__all__"

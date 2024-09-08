@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "users",
     "materials",
     "django_filters",
+    "drf_yasg",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -87,6 +89,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
+    "DEFAULT_SCHEMA_CLASS": ["drf_spectacular.openapi.AutoSchema"],
 }
 
 # Database
@@ -147,3 +150,5 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
