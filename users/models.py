@@ -30,9 +30,16 @@ class User(AbstractUser):
         verbose_name="Аватар",
         help_text="Загрузите аватар",
     )
+    last_login = models.DateTimeField(
+        auto_now=True, verbose_name="Последний вход", blank=True, null=True
+    )
+    is_active = models.BooleanField(default=True, verbose_name="Активный")
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.email
 
     class Meta:
         verbose_name = "Пользователь"

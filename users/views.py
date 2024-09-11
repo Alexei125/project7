@@ -29,5 +29,3 @@ class PaymentCreateAPIView(CreateAPIView):
         payment.session_id = session_id
         payment.link = payment_link
         payment.save()
-
-
